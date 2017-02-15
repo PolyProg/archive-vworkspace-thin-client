@@ -56,24 +56,6 @@ def setup_logging():
     logger.addHandler(handler)
 
 
-def setup_keyboard():
-    try:
-        while True:
-            check_call(["system-config-keyboard"])
-
-            while True:
-                res = input("Are you sure of your choice ? [y/N]").lower()
-                if res == "y":
-                    return
-                elif res == "n" or res == "":
-                    break
-                else:
-                    print("Invalid answer. Got {}".format(res))
-    except FileNotFoundError:
-        logger.error("system-config-keyboard is not installed, please install it. Aborting.")
-        exit(1)
-
-
 def check_wifi_availability():
     logger.info("Checking wifi availability ...")
 
@@ -125,7 +107,6 @@ def check_connected_to_internet():
 def main():
     setup_logging()
     logger.info("System up, launching setup")
-    setup_keyboard()
     check_connected_to_internet()
     check_laptop_is_charging()
 

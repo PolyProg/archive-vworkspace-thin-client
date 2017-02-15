@@ -1,8 +1,10 @@
 %packages --excludedocs
+# Needed for boot
 shim
 
-acpi  # Needed to check battery status
-system-config-keyboard  # Needed by firstboot script allowing to change keyboard
+# Needed to check battery status
+acpi
 
+# Needed for Wifi
 NetworkManager-wifi
 %end

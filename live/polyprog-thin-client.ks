@@ -3,31 +3,29 @@
 %include ../upstream-live/fedora-live-minimization.ks
 
 # Custom configuration
+# Beware that order matters and the minimization should be last in the list
 %include polyprog-packages.ks
-%include polyprog-minimization.ks
 %include polyprog-vworkspace-setup.ks
+%include polyprog-minimization.ks
+
 
 # Override local values
 lang en_GB.UTF-8
 keyboard --vckeymap ch-fr --xlayouts='ch (fr)' ch
+services --enabled=NetworkManager --disabled=network,sshd
 timezone Europe/Zurich
 
 # Package fetching configuration
 url --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
-services --enabled=NetworkManager --disabled=network,sshd
-
-bootloader --append rd.live.ram=1
 
 
-%post --nochroot --log=/mnt/sysimage/root/post-setup.log
+bootloader --append="rd.live.ram=1"
+
+
+%post --nochroot --erroronfail
 rsync -raAHx $BASE_DIRECTORY/skel/* /mnt/sysimage/
 
 #cp $BASE_DIRECTORY/packages/* /mnt/sysimage/tmp/
-
-%end
-
-
-%post
 
 # enable timesyncd
 
