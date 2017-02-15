@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+set -eux
+
+SCRIPT=$(readlink -f "$0")
+export BASE_DIRECTORY=$(dirname "$SCRIPT")
+
+
+readonly BASE_KS_DIR="${BASE_DIRECTORY}/live"
+readonly BASE_KS='polyprog-thin-client.ks'
+readonly NAME='PolyProg-ThinClient'
+
+readonly FLAT_KS="flat-${BASE_KS}"
+
+rm -rf ${BASE_DIRECTORY}/logs
+rm -rf ${BASE_DIRECTORY}/results/
+
+
+ksflatten --config "${BASE_KS_DIR}/${BASE_KS}" --output "${FLAT_KS}" \
+
+livemedia-creator --ks "${FLAT_KS}" \
+		  --project "${NAME}" --volid "${NAME}" \
+		  --iso-name "${NAME}.iso" --title "${NAME}" \
+		  --make-iso --iso-only --macboot \
+		  --resultdir ${BASE_DIRECTORY}/results/ \
+		  --logfile ${BASE_DIRECTORY}/logs/main.log \
+ 		  --no-virt

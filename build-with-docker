@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+BASE_DIRECTORY=$(dirname "$(readlink -f "$0")")
+
+docker build -t polyprog-builder .
+docker run --privileged -it -v /dev/:/dev -v ${BASE_DIRECTORY}:/build:Z polyprog-builder /build/build
