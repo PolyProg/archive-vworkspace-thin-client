@@ -14,6 +14,7 @@ timezone Europe/Zurich
 
 # Package fetching configuration
 url --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
+services --enabled=NetworkManager --disabled=network,sshd
 
 bootloader --append rd.live.ram=1
 
