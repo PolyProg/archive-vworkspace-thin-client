@@ -5,7 +5,6 @@ This repository contains all the necessary tools to build a small fedora-base li
 
 We use this in the events we organize at EPFL to allow users to access our vms.
 
-
 ### Configuring the ISO
 
 You need to add network configuration if you need wifi.
@@ -18,8 +17,8 @@ and that way the ISO will connect to the network automatically once booted
 
 ### Building the ISO
 
-First of all, you need to get a copy of the vworkspace client. As this requires an account,
- we won't provide a link for it.
+First of all, you need to get a copy of the vworkspace client.
+Link within EPFL: https://vdi.epfl.ch/native/Downloads/IndexLogin
 
 Once you have it, you need to copy it to the base directory :
 
