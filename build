@@ -24,4 +24,8 @@ livemedia-creator --ks "${FLAT_KS}" \
 		  --make-iso --iso-only --macboot \
 		  --resultdir ${BASE_DIRECTORY}/results/ \
 		  --logfile ${BASE_DIRECTORY}/logs/main.log \
+		  --dracut-arg="--add dmsquash-live" \
+		  --dracut-arg="--omit convertfs plymouth livenet qemu qemu-net pollcdrom" \
+		  --dracut-arg="--debug" \
+		  --dracut-arg="--no-early-microcode" \
  		  --no-virt
