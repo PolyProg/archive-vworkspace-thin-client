@@ -22,6 +22,7 @@ livemedia-creator --ks "${FLAT_KS}" \
 		  --project "${NAME}" --volid "${NAME}" \
 		  --iso-name "${NAME}.iso" --title "${NAME}" \
 		  --make-iso --iso-only --macboot \
+		  --lorax-templates "${BASE_DIRECTORY}/lorax-templates" \
 		  --resultdir ${BASE_DIRECTORY}/results/ \
 		  --logfile ${BASE_DIRECTORY}/logs/main.log \
 		  --dracut-arg="--add dmsquash-live" \

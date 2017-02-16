@@ -20,9 +20,6 @@ timezone Europe/Zurich
 url --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
 
 
-bootloader --append="rd.live.ram=1"
-
-
 %post --nochroot --erroronfail
 rsync -raAHx $BASE_DIRECTORY/skel/* /mnt/sysimage/
 
