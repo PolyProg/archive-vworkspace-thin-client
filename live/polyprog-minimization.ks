@@ -18,8 +18,10 @@
 -ntfs-3g
 -btrfs-progs
 -e2fsprogs
+-mdadm
 -ntfsprogs
 -smartmontools
+-parted
 
 # Networking
 -@dial-up
@@ -33,11 +35,13 @@
 
 # locales and fonts
 -ibus-libpinyin
-%end
 
-# Here we cleanup packages that could not be removed from the installation
-%post --erroronfail
-set -eux
-dnf --assumeyes remove GeoIP cpp plymouth
-dnf clean all
+# boot
+-plymouth-system-theme
+
+# miscellaneous
+-mlocate
+-fpaste
+-rsync
+-vim-minimal
 %end
