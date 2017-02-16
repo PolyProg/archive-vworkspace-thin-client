@@ -11,6 +11,8 @@
 # documentation
 -fedora-release-notes
 -python-systemd-doc
+-man-pages
+-man-db
 
 # filesystems
 -cryptsetup
@@ -27,6 +29,7 @@
 -@dial-up
 -telnet
 -traceroute
+-tcpdump
 
 # security
 -audit
@@ -35,8 +38,10 @@
 
 # locales and fonts
 -ibus-libpinyin
+-glibc-all-langpacks
 
 # boot
+-plymouth
 -plymouth-system-theme
 
 # miscellaneous
@@ -44,4 +49,10 @@
 -fpaste
 -rsync
 -vim-minimal
+-usb_modeswitch
+-words
+-tree
+-mailcap
+-zip
+
 %end
