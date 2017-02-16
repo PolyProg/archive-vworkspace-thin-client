@@ -1,10 +1,12 @@
 %packages
 -@anaconda-tools
 -anaconda
+-abrt-cli
 
 -@guest-desktop-agents
 -@multimedia
 -@printing
+-@fonts
 
 # documentation
 -fedora-release-notes
@@ -26,11 +28,16 @@
 
 # security
 -audit
+-firewalld
+-sudo
+
+# locales and fonts
+-ibus-libpinyin
 %end
 
 # Here we cleanup packages that could not be removed from the installation
 %post --erroronfail
 set -eux
-dnf --assumeyes remove GeoIP cpp plymouth libpinyin
+dnf --assumeyes remove GeoIP cpp plymouth
 dnf clean all
 %end

@@ -12,6 +12,7 @@
 # Override local values
 lang en_GB.UTF-8
 keyboard --vckeymap ch-fr --xlayouts='ch (fr)' ch
+firewall --disabled
 services --enabled=NetworkManager --disabled=network,sshd
 timezone Europe/Zurich
 
