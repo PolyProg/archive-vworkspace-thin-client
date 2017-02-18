@@ -1,58 +1,56 @@
 %packages
+# These groups are added by the base fedora live system. We don't want them
 -@anaconda-tools
--anaconda
--abrt-cli
-
+-@dial-up
+-@fonts
 -@guest-desktop-agents
+-@input-methods
 -@multimedia
 -@printing
--@fonts
+-@standard
 
-# documentation
--fedora-release-notes
--python-systemd-doc
--man-pages
--man-db
-
-# filesystems
--cryptsetup
--dosfstools
--ntfs-3g
--btrfs-progs
--e2fsprogs
--mdadm
--ntfsprogs
--smartmontools
--parted
-
-# Networking
--@dial-up
--telnet
--traceroute
--tcpdump
-
-# security
--audit
--firewalld
--sudo
-
-# locales and fonts
--ibus-libpinyin
+# installed manually but not wanted
+-anaconda
 -glibc-all-langpacks
+-memtest86+
 
-# boot
+# wanted by core and base but not needed
+-e2fsprogs
+-openssh-server
+-curl
 -plymouth
+-dnf-yum
+-setup
+-man-db
+-grubby
+-procps-ng
+-sudo
+-cronie
+-openssh-clients
+-audit
+-parted
+-vim-minimal
 -plymouth-system-theme
 
-# miscellaneous
--mlocate
--fpaste
--rsync
--vim-minimal
+-firewalld
+-glx-utils
+-grub2-efi
 -usb_modeswitch
--words
--tree
--mailcap
--zip
+%end
 
+
+# We remove last non-necessary stuff manually
+%post --nochroot --erroronfail --log=/tmp/ks-manual-removal.log
+set -eux
+
+dnf --installroot /mnt/sysimage/ --assumeyes remove make systemd-bootchart pinentry GeoIP grubby kpartx trousers
+
+rm -rf /mnt/sysimage/usr/share/locale
+rm -rf /mnt/sysimage/usr/share/doc
+%end
+
+
+%post --nochroot --log=/tmp/ks-installed-package.log --erroronfail
+dnf  --installroot /mnt/sysimage/ list installed | cut -d " " -f 1 | cut -d "." -f 1 | tail -n +3 | sort
+dnf --installroot /mnt/sysimage/ clean all
 %end

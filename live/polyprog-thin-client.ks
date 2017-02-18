@@ -23,18 +23,18 @@ url --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$release
 %post --nochroot --erroronfail
 rsync -raAHx $BASE_DIRECTORY/skel/* /mnt/sysimage/
 
-#cp $BASE_DIRECTORY/packages/* /mnt/sysimage/tmp/
+chown root:root /mnt/sysimage/usr/local/bin/run.py
+chown root:root /mnt/sysimage/etc/sysconfig/network-scripts/*
 
 # enable timesyncd
 
-# set hostname
-
-#chown root:root /etc/NetworkManager/dispatcher.d/90-sethostname
-#chmod 755 /etc/NetworkManager/dispatcher.d/90-sethostname
 
 #chown root:root /etc/polkit-1/rules.d/00-restrict.rules
-#chown root:root /etc/salt/minion
-
 #chown root:root -R /usr/local/sbin
 
+%end
+
+
+%post
+systemctl daemon-reload
 %end

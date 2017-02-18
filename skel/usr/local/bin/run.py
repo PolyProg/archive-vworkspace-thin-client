@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import logging
-from subprocess import check_call, check_output, DEVNULL, CalledProcessError
+from subprocess import call, check_call, check_output, DEVNULL, CalledProcessError
 
 import sys
 
@@ -49,6 +49,8 @@ class ColoredFormatter(logging.Formatter):
 
 def setup_logging():
     logger.setLevel(logging.INFO)
+    logger.propagate = False
+
     formatter = ColoredFormatter("[$BLACK{asctime}$RESET] $LEVEL{message}$RESET", '%H:%M:%S')
     handler = logging.StreamHandler(sys.stderr)
 
@@ -109,6 +111,8 @@ def main():
     logger.info("System up, launching setup")
     check_connected_to_internet()
     check_laptop_is_charging()
+    input("Press any key to continue")
+    call('su liveuser -c "xinit vworkspace"', shell=True)
 
 
 if __name__ == '__main__':
