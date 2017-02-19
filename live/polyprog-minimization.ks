@@ -13,6 +13,7 @@
 -anaconda
 -glibc-all-langpacks
 -memtest86+
+-aajohan-comfortaa-fonts
 
 # wanted by core and base but not needed
 -e2fsprogs
@@ -34,8 +35,9 @@
 
 -firewalld
 -glx-utils
--grub2-efi
 -usb_modeswitch
+
+-chrony # we use systemd-timesyncd anyways
 %end
 
 

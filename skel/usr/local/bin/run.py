@@ -112,7 +112,7 @@ def main():
     check_connected_to_internet()
     check_laptop_is_charging()
     input("Press any key to continue")
-    call('su liveuser -c "xinit vworkspace"', shell=True)
+    call('su liveuser -c "xinit"', shell=True)
 
 
 if __name__ == '__main__':

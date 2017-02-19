@@ -9,7 +9,7 @@
 %include polyprog-minimization.ks
 
 
-# Override local values
+# Override local values and base setup
 lang en_GB.UTF-8
 keyboard --vckeymap ch-fr --xlayouts='ch (fr)' ch
 firewall --disabled
@@ -20,21 +20,24 @@ timezone Europe/Zurich
 url --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
 
 
-%post --nochroot --erroronfail
+%post --nochroot --erroronfail --log /tmp/ks-copy-and-enable
+set -eux
+#let's copy files to the system
 rsync -raAHx $BASE_DIRECTORY/skel/* /mnt/sysimage/
 
-chown root:root /mnt/sysimage/usr/local/bin/run.py
-chown root:root /mnt/sysimage/etc/sysconfig/network-scripts/*
+# let's change access rights correctly
+chown -R root:root /mnt/sysimage/usr/local/bin/
+chown -R root:root /mnt/sysimage/etc/sysconfig/network-scripts/
+chown -R root:root /mnt/sysimage/etc/systemd/system
+chown root:root /mnt/sysimage/etc/polkit-1/rules.d/00-restrict.rules
 
-# enable timesyncd
-
-
-#chown root:root /etc/polkit-1/rules.d/00-restrict.rules
-#chown root:root -R /usr/local/sbin
+mkdir -p /mnt/sysimage/etc/systemd/system/sysinit.targets.wants/
+ln -sf /usr/lib/systemd/system/systemd-timesyncd.service /mnt/sysimage/etc/systemd/system/sysinit.targets.wants/systemd-timesyncd.service
 
 %end
 
 
-%post
+%post --erroronfail
+set -eux
 systemctl daemon-reload
 %end
