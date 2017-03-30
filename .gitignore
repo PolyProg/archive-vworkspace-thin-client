@@ -9,7 +9,4 @@ logs
 # vworkspace
 vworkspace*
 
-
-# private stuff
-skel/etc/sysconfig/network-scripts/keys-*
-skel/etc/sysconfig/network-scripts/ifcfg-*
+.setup.env

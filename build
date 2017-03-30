@@ -15,6 +15,13 @@ readonly FLAT_KS="flat-${BASE_KS}"
 rm -rf ${BASE_DIRECTORY}/logs
 rm -rf ${BASE_DIRECTORY}/results/
 
+if ! [ -f ${BASE_DIRECTORY}/skel/.setup.env ]; then
+    echo "File ${BASE_DIRECTORY}/skel/.setup.env does not exist and the build won't be able to login to the internet"
+    exit 1
+fi
+
+# TODO : source the file above and check that all required environment variables are set
+
 
 ksflatten --config "${BASE_KS_DIR}/${BASE_KS}" --output "${FLAT_KS}" \
 

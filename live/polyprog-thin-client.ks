@@ -24,12 +24,15 @@ url --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$release
 set -eux
 #let's copy files to the system
 rsync -raAHx $BASE_DIRECTORY/skel/* /mnt/sysimage/
+cp $BASE_DIRECTORY/skel/.setup.env /mnt/sysimage/
 
 # let's change access rights correctly
 chown -R root:root /mnt/sysimage/usr/local/bin/
-chown -R root:root /mnt/sysimage/etc/sysconfig/network-scripts/
 chown -R root:root /mnt/sysimage/etc/systemd/system
 chown root:root /mnt/sysimage/etc/polkit-1/rules.d/00-restrict.rules
+
+chown root:root mnt/sysimage/.setup.env
+chmod 400 /mnt/sysimage/.setup.env
 
 mkdir -p /mnt/sysimage/etc/systemd/system/sysinit.targets.wants/
 ln -sf /usr/lib/systemd/system/systemd-timesyncd.service /mnt/sysimage/etc/systemd/system/sysinit.targets.wants/systemd-timesyncd.service
@@ -40,4 +43,5 @@ ln -sf /usr/lib/systemd/system/systemd-timesyncd.service /mnt/sysimage/etc/syste
 %post --erroronfail
 set -eux
 systemctl daemon-reload
+
 %end

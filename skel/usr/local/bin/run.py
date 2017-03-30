@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import logging
+import os
 from subprocess import call, check_call, check_output, DEVNULL, CalledProcessError
-
 import sys
+import time
+
 
 __author__ = "Benjamin Schubert <ben.c.schubert@gmail.com>"
 
@@ -58,6 +60,24 @@ def setup_logging():
     logger.addHandler(handler)
 
 
+def check_env_sanity():
+    missing = [val for val in ["ACCESS_POINT", "ROOT_PASSWORD", "WIFI_PASSWORD"] if not os.environ.get(val)]
+
+    if missing:
+        logger.error("These environment variables are missing. Is your `/etc/setup.env` correct ?")
+
+        for m in missing:
+            logger.error("\t{}".format(m))
+
+        logger.error("Environment not sane, aborting.")
+        input("Press any key to continue")
+        exit(1)
+
+
+def set_root_password():
+    check_call("echo root:{} | chpasswd --encrypted".format(os.environ.get("ROOT_PASSWORD")), shell=True)
+
+
 def check_wifi_availability():
     logger.info("Checking wifi availability ...")
 
@@ -72,6 +92,7 @@ def check_wifi_availability():
 
     if available_wifis:
         logger.info("Found following interfaces supporting wifi : {}".format(",".join(available_wifis)))
+        logger.info("It is very likely your laptop will work when at EPFL")
     else:
         logger.error("No interface with wifi support was found. Please contact a staff member.")
         exit(1)
@@ -99,16 +120,25 @@ def check_laptop_is_charging():
 
 def check_connected_to_internet():
     logger.info("Checking internet connection ...")
-    try:
-        check_call(["ping", "-c", "3", "www.google.com"], stdout=DEVNULL)
-    except CalledProcessError:
-        logging.warning("Not connected to the internet.")
+
+    for i in range(10):
+        try:
+            check_call(["nmcli", "device", "wifi", "connect", os.environ.get("ACCESS_POINT"), "password", os.environ.get("WIFI_PASSWORD")])
+        except CalledProcessError:
+            logger.warning("[{}/10] error connecting to wifi, waiting a bit to discover SSID".format(i))
+            time.sleep(5)
+        else:
+            break
+    else:
+        logger.error("Could not connect to wifi")
         check_wifi_availability()
 
 
 def main():
     setup_logging()
     logger.info("System up, launching setup")
+    check_env_sanity()
+    set_root_password()
     check_connected_to_internet()
     check_laptop_is_charging()
     input("Press any key to continue")
