@@ -5,6 +5,7 @@
 # Custom configuration
 # Beware that order matters and the minimization should be last in the list
 %include polyprog-packages.ks
+%include rpmfusion-repos.ks
 %include polyprog-vworkspace-setup.ks
 %include polyprog-minimization.ks
 

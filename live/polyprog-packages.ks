@@ -14,4 +14,6 @@ nano
 # needed to notify user about battery status
 libnotify
 xfce4-notifyd
+
+broadcom-wl
 %end
