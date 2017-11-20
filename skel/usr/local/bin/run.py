@@ -137,11 +137,11 @@ def check_connected_to_internet():
 def main():
     setup_logging()
     logger.info("System up, launching setup")
-    check_env_sanity()
+    #check_env_sanity()
     set_root_password()
-    check_connected_to_internet()
-    check_laptop_is_charging()
-    input("Press any key to continue")
+    #check_connected_to_internet()
+    #check_laptop_is_charging()
+    #input("Press any key to continue")
     call('su liveuser -c "xinit"', shell=True)
 
 
